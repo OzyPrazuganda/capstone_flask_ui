@@ -29,7 +29,7 @@ Data yang digunakan pada capstone project ini adalah data hasil scraping dari Go
 ## Rubrics
 Pada capstone ini, Anda diharapkan untuk dapat membangun sebuah aplikasi Flask yang fokus pada tampilan user interface. Langkah pertama yang harus Anda lakukan adalah silahkan download atau clone repositori ini. File pada repositori ini merupakan sebuah skeleton untuk membuat sebuah dashboard aplikasi Flask. Pada bagian `app.py` dan `templates/index.html` ada beberapa bagian yang rumpang dan harus Anda lengkapi. Beberapa bagian yang harus diperhatikan adalah sebagai berikut:
 
-### 1. Setting Repository Github dan Environment (2 poin)
+### 1. Setting Repository Github dan Environment
 - Repository 
 
 a. Membuat repository baru di Github
@@ -41,11 +41,11 @@ a. Created virtual environment called "capstone-flask"
 
 Hal pertama yang harus dilakukan adalah melakukan pengaturan environment conda. Untuk menyiapkan conda environment dan kernel, silahkan gunakan command berikut:
 ```
-conda create -n <ENV_NAME> python=3.10
-conda activate <ENV_NAME>
+conda create -n capstone-flask python=3.10
+conda activate capstone-flask
 
 conda install ipykernel
-python -m ipykernel install --user --name <ENV_NAME>
+python -m ipykernel install --user --name capstone-flask
 ```
 
 b. Install packages: pandas, flask, matplotlib, dan numpy
@@ -55,22 +55,22 @@ Seluruh dependecies telah di-export ke dalam file requirements.txt. Oleh karena 
 pip install -r requirements.txt --user
 ```
 
-### 2. Data Preproses and Exploratory Data Analysis (2 poin)
+### 2. Data Preproses and Exploratory Data Analysis
 Pada tahap praproses ini, Anda diminta untuk melengkapi praproses data seperti menghapus data yang duplikat, mengubah tipe data dan memodifikasi nilai data. Pada file `app.py` Anda diminta untuk melengkapi data yang rumpang tanpa mengubah alur praproses yang telah ada.
 Berikut ini contoh bagian yang harus Anda lengkapi saat praproses data:
 ```
-playstore._________(subset ="_____", keep = '_____', inplace=True) 
+playstore.Category(subset ="App", keep = 'first', inplace=True) 
 playstore.drop([10472], inplace=True)
 # Buang tanda koma(,) dan tambah(+) kemudian ubah tipe data menjadi integer
 playstore.Category = playstore.Category.astype('category')
-playstore.Installs = ________.apply(lambda x: x.replace(______))
-playstore.Installs = ________.apply(lambda x: x.replace(______))
+playstore.Installs = playstore.apply(lambda x: x.replace(',',''))
+playstore.Installs = playstore.apply(lambda x: x.replace('+'.''))
 ```
-### 3. Data Wrangling (4 poin)
+### 3. Data Wrangling
 - Pada tahap ini Anda diminta untuk melakukan grouping dan agregasi data. Data wrangling digunakan untuk menyiapkan data yang tepat sesuai analisis yang diminta. Pada capstone ini terdapat objek dictionary dengan nama `stats` dan Anda diminta untuk melengkapi bagian yang rumpang agar menghasilkan data/nilai yang sesuai. Sebagai gambaran pada objek `stats` terdapat variabel `rev_tablel` dimana Anda harus melakukan grouping dan agregasi data yang digunakan untuk membuat data table seperti di bawah ini:
 <img src="https://raw.githubusercontent.com/fafilia/capstone-UIFlask/master/table_rev.PNG" width=400>
 
-### 4. Data Visualization (4 poin)
+### 4. Data Visualization
 - Membuat atau menduplikasi bar plot yang menggambarkan top 5 Category pada Google Playstore
 - Membuat atau menduplikasi scatter plot yang menggambarkan sebaran aplikasi jika dilihat berdasarkan Review, Rating, dan jumlah aplikasi yang terinstall.
 - Membuat atau menduplikasi histogram plot untuk melihat distribusi ukuran aplikasi 
@@ -81,9 +81,9 @@ playstore.Installs = ________.apply(lambda x: x.replace(______))
 ### 5. Build Flask App (4 poin)
 Mengacu pada poin ke empat Data Visualization di atas, selain membuat plot baru Anda harus mendemonstrasikan bagaimana cara merender plot tersebut pada aplikasi Flask dan menampilkannya pada templates / halaman html. Yang perlu Anda perhatikan adalah pada bagian `app.py`:
 ```
-render_templates(__________)
+render_templates('index.html', stats=stats, result=result, result1=result1, result2=result2, result3=result3, result4=result4)
 ```
 dan pada `templates/index.html` Anda perlu memanggil source plot.png tempat Anda menyimpan gambar plot tersebut.
 ```
-<img src="________________________" height="450" width=500>
+<img src="data:image/png;base64,{{ result2 }}" height="450" width=500>
 ```
